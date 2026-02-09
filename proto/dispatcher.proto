@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package dispatcher;
+
+message LaunchRequest {
+  string tool_name = 1;
+  map<string, string> parameters = 2;
+}
+
+message LaunchResponse {
+  ToolId tool_id = 1;
+}
+
+message ToolId {
+  string id = 1;
+}
+
+enum ToolState {
+  UNSPECIFIED = 0;
+  PENDING = 1;
+  RUNNING = 2;
+  SUCCEEDED = 3;
+  FAILED = 4;
+  CANCELLED = 5;
+}
+
+message ToolStatus {
+  ToolId tool_id = 1;
+  ToolState state = 2;
+  string message = 3; // error message, progress info, etc.
+}
+
+service Dispatcher {
+  rpc LaunchTool(LaunchRequest) returns (LaunchResponse);
+
+  rpc CheckToolStatus(ToolId) returns (ToolStatus);
+}
+
