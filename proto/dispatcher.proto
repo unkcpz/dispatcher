@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package dispatcher;
 
+option go_package = "github.com/unkcpz/dispatcher/proto";
+
 message LaunchRequest {
   string tool_name = 1;
   map<string, string> parameters = 2;
